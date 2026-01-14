@@ -4,14 +4,14 @@ dotenv.config();
 
 import app from "./src/app.js";
 import { initWebSocket } from "./src/websockets/ws.server.js";
-import authRoutes from "./src/routes/auth.js";
+import loginRoutes from "./src/routes/login.js";
 
 const server = http.createServer(app);
 const wss = initWebSocket(server);
 
-// Inject WS into REST routes
-app.use("/auth", authRoutes(wss));
+app.use("/", loginRoutes(wss));
 
-server.listen(process.env.PORT, () => {
-  console.log("Server running on : localhost:" + process.env.PORT);
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log("Server running on http://localhost:" + PORT);
 });
